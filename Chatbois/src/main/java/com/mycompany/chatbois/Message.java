@@ -27,5 +27,9 @@ public class Message implements Serializable {
         this.user = user;
         this.text = text;
     }
+
+    void setConversation(Conversation c) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

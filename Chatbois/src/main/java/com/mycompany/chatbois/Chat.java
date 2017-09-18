@@ -27,21 +27,19 @@ import javax.ws.rs.core.Response;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class Chat {
-    //@PersistenceContext
-    //EntityManager em;
+    @PersistenceContext
+    EntityManager em;
     
     @GET
     public List<Message> getMessages(@QueryParam("name") String name) {
-        List<Message> result = new ArrayList<Message>();
-        result.add(new Message("kris", "YO!!!!"));
-        result.add(new Message("kris", "YO!!!!"));
-        result.add(new Message("kris", "YO!!!!"));
+        List<Message> result = null;
+        
         
         if(name.equals("kris")) {
             return result;
         }
         
-        return Collections.EMPTY_LIST;
+        return result != null ? result : Collections.EMPTY_LIST;
     }
     
     @POST
@@ -49,8 +47,22 @@ public class Chat {
     public Response addMessage(@QueryParam("name") String name, Message message) {
         
         if(name.equals("kris")) {
+            Conversation c = em.find(Conversation.class, name);
             
+            if(c == null) {
+                c = new Conversation(name);
+                em.persist(c);
+            }
+            
+            message.setConversation(c);
+            em.persist(c);
+            
+            return Response.ok(message).build();
+        } else {
+            return Response.noContent().build();
         }
+        
+        
     }
     
     
