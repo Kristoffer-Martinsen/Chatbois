@@ -5,7 +5,7 @@
  */
 
 function getMessages() {
-    fetch('api/messages?name=' + this.name).
+    fetch('api/messages').
             then(response => {
                 if(response.ok) {
                     return response.json();

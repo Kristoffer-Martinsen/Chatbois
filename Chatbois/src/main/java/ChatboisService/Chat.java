@@ -7,7 +7,6 @@ package ChatboisService;
 
 import com.mycompany.chatbois.Conversation;
 import com.mycompany.chatbois.Message;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -35,18 +34,11 @@ public class Chat {
     EntityManager em;
     
     @GET
-    public List<Message> getMessages(@QueryParam("name") String name) {
-        List<Message> result = null;
-        
-        if(name != null) {
-            result = em.createQuery("SELECT m FROM Message m WHERE m.conversation.id = :id",
-                    Message.class)
-                    .setParameter("id", name)
-                    .getResultList();
-        }
-        
-        
-        return result != null ? result : Collections.EMPTY_LIST;
+    public List<Message> getMessages() {
+
+        return em.createQuery("SELECT m FROM Message m",
+                Message.class)
+                .getResultList(); 
     }
     
     @POST

@@ -1,7 +1,15 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
+/*
+class User {
+    constructor() {
+        this.user = document.querySelector("#username");
+        
+        this.user.onchange = event => {
+            this.user = document.getElementById("username").value;
+        };
+    } 
+}
+let user = new User();
+*/
+function login() {
+    window.location.href = "/Chatbois/chat.html?name=" + document.querySelector("#username").value; 
+}

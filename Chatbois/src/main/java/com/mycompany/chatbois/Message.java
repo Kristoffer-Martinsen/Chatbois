@@ -36,8 +36,6 @@ public class Message implements Serializable {
     
     @Column(name = "userid")
     String user;
-    
-    
     String text;
     
     @Version

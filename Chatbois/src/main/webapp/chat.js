@@ -4,14 +4,14 @@ class Chat {
         this.chat = document.querySelector("#chat");
         this.message = document.querySelector("#message");
         
-        this.name = new URL(document.URL).searchParams.get("name");
-        //this.loadChat(this.name);
         
+        
+        this.name = new URL(document.URL).searchParams.get("name");
         this.message.onchange = event => {
             fetch('api/messages/add?name=' + this.name, 
             {
                 method: 'POST',
-                body: JSON.stringify(new Message('kris', event.target.value)),
+                body: JSON.stringify(new Message(this.name, event.target.value)),
                 headers: {'Content-Type' : 'application/json; charset=UTF-8'}
             })
                     .then(response => {
