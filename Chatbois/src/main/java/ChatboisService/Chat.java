@@ -3,11 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.chatbois;
+package ChatboisService;
 
+import com.mycompany.chatbois.Conversation;
+import com.mycompany.chatbois.Message;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -23,6 +26,7 @@ import javax.ws.rs.core.Response;
  *
  * @author Kristoffer
  */
+@Stateless
 @Path("messages")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
@@ -34,10 +38,13 @@ public class Chat {
     public List<Message> getMessages(@QueryParam("name") String name) {
         List<Message> result = null;
         
-        
-        if(name.equals("kris")) {
-            return result;
+        if(name != null) {
+            result = em.createQuery("SELECT m FROM Message m WHERE m.conversation.id = :id",
+                    Message.class)
+                    .setParameter("id", name)
+                    .getResultList();
         }
+        
         
         return result != null ? result : Collections.EMPTY_LIST;
     }
@@ -46,7 +53,7 @@ public class Chat {
     @Path("add")
     public Response addMessage(@QueryParam("name") String name, Message message) {
         
-        if(name.equals("kris")) {
+        if(name != null) {
             Conversation c = em.find(Conversation.class, name);
             
             if(c == null) {
@@ -55,15 +62,11 @@ public class Chat {
             }
             
             message.setConversation(c);
-            em.persist(c);
+            em.persist(message);
             
             return Response.ok(message).build();
         } else {
             return Response.noContent().build();
-        }
-        
-        
+        }   
     }
-    
-    
 }

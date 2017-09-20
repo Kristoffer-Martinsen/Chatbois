@@ -21,7 +21,7 @@ function getMessages() {
 }
 
 self.addEventListener("message", event => {
-    this.name = event.data.nameM
+    this.name = event.data.name;
 }, false);
 
 getMessages();

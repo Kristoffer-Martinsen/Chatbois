@@ -1,8 +1,3 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 class Chat {
     constructor() {
@@ -13,7 +8,8 @@ class Chat {
         //this.loadChat(this.name);
         
         this.message.onchange = event => {
-            fetch('api/messages/add?name=' + this.name, {
+            fetch('api/messages/add?name=' + this.name, 
+            {
                 method: 'POST',
                 body: JSON.stringify(new Message('kris', event.target.value)),
                 headers: {'Content-Type' : 'application/json; charset=UTF-8'}
