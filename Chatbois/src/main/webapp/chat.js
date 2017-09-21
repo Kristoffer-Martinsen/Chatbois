@@ -3,10 +3,10 @@ class Chat {
     constructor() {
         this.chat = document.querySelector("#chat");
         this.message = document.querySelector("#message");
-        
-        
+        this.picture = document.querySelector("#picture");
         
         this.name = new URL(document.URL).searchParams.get("name");
+
         this.message.onchange = event => {
             fetch('api/messages/add?name=' + this.name, 
             {
@@ -45,6 +45,35 @@ class Chat {
     }
 }
 
+function getInputData(e) {
+    if(e.target.files && e.target.files[0]) {
+        upload(e.target.files[0]);  
+    }
+}
+
+function upload(file) {
+    let fileName = file.name;
+    let image = null;
+    let reader = new FileReader();
+    
+    reader.onload = function(event) {
+        let imageInput = event.target.result;
+        postImage(imageInput);
+        console.log(imageInput);
+    };
+    reader.readAsDataURL(file);
+}
+
+function postImage(dataString) {
+    fetch('api/messages/add?name=' + this.name, 
+            {
+                method: 'POST',
+                body: JSON.stringify(dataString),
+                headers: {'Content-Type' : 'application/json; charset=UTF-8'}
+            })
+}
+
+
 class Message {
     constructor(user, text) {
         this.user = user;
@@ -52,5 +81,13 @@ class Message {
         this.version = new Date();
     }
 }
+
+class Image {
+    constructor(dataString, imageName) {
+        this.dataString = dataString;
+        this.imageName = imageName;
+    }
+}
+
 
 let chat = new Chat();
