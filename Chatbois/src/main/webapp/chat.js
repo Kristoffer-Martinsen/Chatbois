@@ -58,7 +58,7 @@ function upload(file) {
     
     reader.onload = function(event) {
         let imageInput = event.target.result;
-        postImage(imageInput);
+        //postImage(imageInput);
         console.log(imageInput);
     };
     reader.readAsDataURL(file);
